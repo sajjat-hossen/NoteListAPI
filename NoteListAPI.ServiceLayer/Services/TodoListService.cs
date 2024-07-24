@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NoteListAPI.DomainLayer.Models;
 using NoteListAPI.RepositoryLayer.IRepositories;
+using NoteListAPI.RepositoryLayer.Repositories;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
 using System;
@@ -94,14 +95,23 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region UpdateTodoListAsync
+        #region UpdateTodoListAsync
 
-        //public async Task UpdateTodoListAsync(TodoListViewModel model)
-        //{
-        //    var note = MapTodoListViewModelToTodoList(model);
-        //    await _todoListRepository.UpdateEntityAsync(note);
-        //}
+        public async Task<bool> UpdateTodoListAsync(UpdateTodoList model)
+        {
+            var todoListInDb = await GetTodoListByIdAsync(model.Id);
 
-        //#endregion
+            if (todoListInDb == null)
+            {
+                return false;
+            }
+
+            _mapper.Map(model, todoListInDb);
+            await _todoListRepository.UpdateEntityAsync(todoListInDb);
+
+            return true;
+        }
+
+        #endregion
     }
 }

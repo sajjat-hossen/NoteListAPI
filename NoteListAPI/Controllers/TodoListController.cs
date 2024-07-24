@@ -91,31 +91,31 @@ namespace NoteListAPI.Controllers
 
         #endregion
 
-        //#region UpdateNote
+        #region UpdateNote
 
-        //[HttpPut("Update")]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPut("Update")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        //public async Task<IActionResult> UpdateNote(UpdateNote note)
-        //{
-        //    if (note == null)
-        //    {
-        //        return BadRequest("Note does not exists");
-        //    }
+        public async Task<IActionResult> UpdateTodoList(UpdateTodoList todoList)
+        {
+            if (todoList == null)
+            {
+                return BadRequest("Todo does not exists");
+            }
 
-        //    var isSuccessful = await _noteService.UpdateNoteAsync(note);
+            var isSuccessful = await _todoListService.UpdateTodoListAsync(todoList);
 
-        //    if (isSuccessful == false)
-        //    {
-        //        return NotFound("Note does not exists");
-        //    }
+            if (isSuccessful == false)
+            {
+                return NotFound("Todo does not exists");
+            }
 
-        //    return Ok("Note updated successfully");
-        //}
+            return Ok("Todo updated successfully");
+        }
 
-        //#endregion
+        #endregion
 
         #region GetTodoListById
 

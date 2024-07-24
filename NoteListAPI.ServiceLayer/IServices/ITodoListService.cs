@@ -14,7 +14,7 @@ namespace NoteListAPI.ServiceLayer.IServices
         Task CreateTodoListAsync(CreateTodoList model);
         Task<TodoList> GetTodoListByIdAsync(int id);
         Task RemoveTodoListAsync(TodoList todoList);
-        //Task UpdateTodoListAsync(TodoListViewModel model);
+        Task<bool> UpdateTodoListAsync(UpdateTodoList model);
         TodoListViewModel MapTodoListToTodoListViewModel(TodoList todoList);
         TodoList MapTodoListViewModelToTodoList(TodoListViewModel model);
     }
