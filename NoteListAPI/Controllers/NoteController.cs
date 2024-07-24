@@ -64,9 +64,9 @@ namespace NoteListAPI.Controllers
 
         #endregion
 
-        #region RemoveNote
+        #region DeleteNote
 
-        [HttpDelete("{id:int}", Name = "Delete")]
+        [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

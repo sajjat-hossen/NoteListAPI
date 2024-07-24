@@ -85,14 +85,14 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region RemoveTodoListAsync
+        #region RemoveTodoListAsync
 
-        //public async Task RemoveTodoListAsync(TodoList todoList)
-        //{
-        //    await _todoListRepository.RemoveEntityAsync(todoList);
-        //}
+        public async Task RemoveTodoListAsync(TodoList todoList)
+        {
+            await _todoListRepository.RemoveEntityAsync(todoList);
+        }
 
-        //#endregion
+        #endregion
 
         //#region UpdateTodoListAsync
 

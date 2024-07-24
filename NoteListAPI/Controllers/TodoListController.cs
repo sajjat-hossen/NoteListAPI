@@ -63,33 +63,33 @@ namespace NoteListAPI.Controllers
 
         #endregion
 
-        //#region RemoveNote
+        #region DeleteTodoList
 
-        //[HttpDelete("{id:int}", Name = "Delete")]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
 
-        //public async Task<IActionResult> DeleteNote(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return BadRequest("Note does not exists");
-        //    }
+        public async Task<IActionResult> DeleteTodoList(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest("Todo does not exists");
+            }
 
-        //    var note = await _noteService.GetNoteByIdAsync(id);
+            var todoList = await _todoListService.GetTodoListByIdAsync(id);
 
-        //    if (note == null)
-        //    {
-        //        return NotFound("Note does not exists");
-        //    }
+            if (todoList == null)
+            {
+                return NotFound("Todo does not exists");
+            }
 
-        //    await _noteService.RemoveNoteAsync(note);
+            await _todoListService.RemoveTodoListAsync(todoList);
 
-        //    return Ok("Note deleted successfully");
-        //}
+            return Ok("Todo deleted successfully");
+        }
 
-        //#endregion
+        #endregion
 
         //#region UpdateNote
 
