@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NoteListAPI.DomainLayer.Models;
 using NoteListAPI.ServiceLayer.IServices;
+using NoteListAPI.ServiceLayer.Models;
 using NoteListAPI.ServiceLayer.Services;
 
 namespace NoteListAPI.Controllers
@@ -40,6 +42,32 @@ namespace NoteListAPI.Controllers
             }
 
             return NotFound("No role found");
+        }
+
+        #endregion
+
+        #region CreateRole
+
+        [HttpPost("add")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<IActionResult> CreateRole(CreateRole model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Failed to create role");
+            }
+
+            var result = await _roleService.CreateRoleAsync(model);
+
+            if (result == false)
+            {
+                return BadRequest("Failed to create role");
+
+            }
+
+            return Ok("Role created successfully");
         }
 
         #endregion
