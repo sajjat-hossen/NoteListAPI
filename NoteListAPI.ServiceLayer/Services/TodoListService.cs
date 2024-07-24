@@ -52,17 +52,17 @@ namespace NoteListAPI.ServiceLayer.Services
 
         //#endregion
 
-        //#region GetAllTodoListAsync
+        #region GetAllTodoListAsync
 
-        //public async Task<List<TodoListViewModel>> GetAllTodoListAsync()
-        //{
-        //    var todoList = await _todoListRepository.GetAllEntityFromDbAsync();
-        //    var todoListViewModel = _mapper.Map<List<TodoListViewModel>>(todoList);
+        public async Task<List<TodoListViewModel>> GetAllTodoListAsync()
+        {
+            var todoList = await _todoListRepository.GetAllEntityFromDbAsync();
+            var todoListViewModel = _mapper.Map<List<TodoListViewModel>>(todoList);
 
-        //    return todoListViewModel;
-        //}
+            return todoListViewModel;
+        }
 
-        //#endregion
+        #endregion
 
         #region CreateTodoListAsync
 

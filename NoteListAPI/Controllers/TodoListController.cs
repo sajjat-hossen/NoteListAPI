@@ -23,25 +23,25 @@ namespace NoteListAPI.Controllers
 
         #endregion
 
-        //#region GetAllNote
+        #region GetAllTodoList
 
-        //[HttpGet("all")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("all")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        //public async Task<IActionResult> GetAllNote()
-        //{
-        //    var notes = await _noteService.GetAllNoteAsync();
+        public async Task<IActionResult> GetAllTodoList()
+        {
+            var todoLists = await _todoListService.GetAllTodoListAsync();
 
-        //    if (notes != null)
-        //    {
-        //        return Ok(notes);
-        //    }
+            if (todoLists != null)
+            {
+                return Ok(todoLists);
+            }
 
-        //    return NotFound("No note found");
-        //}
+            return NotFound("No todo found");
+        }
 
-        //#endregion
+        #endregion
 
         #region CreateTodoList
 
