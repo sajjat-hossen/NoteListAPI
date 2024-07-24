@@ -6,7 +6,7 @@ namespace NoteListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoListController : Controller
+    public class TodoListController : ControllerBase
     {
         #region Fields
 
