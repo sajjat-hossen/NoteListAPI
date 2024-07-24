@@ -17,6 +17,7 @@ namespace NoteListAPI.ServiceLayer.MappingProfiles
             CreateMap<Note, NoteViewModel>();
             CreateMap<CreateNote, Note>();
             CreateMap<UpdateNote, Note>();
+            CreateMap<CreateTodoList, TodoList>();
         }
     }
 }
