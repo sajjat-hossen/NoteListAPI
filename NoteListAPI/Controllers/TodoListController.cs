@@ -117,24 +117,24 @@ namespace NoteListAPI.Controllers
 
         //#endregion
 
-        //#region GetNoteById
+        #region GetTodoListById
 
-        //[HttpGet("{id:int}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        //public async Task<IActionResult> GetNoteById(int id)
-        //{
-        //    var note = _noteService.MapNoteToNoteViewModel(await _noteService.GetNoteByIdAsync(id));
+        public async Task<IActionResult> GetTodoListById(int id)
+        {
+            var todoList = _todoListService.MapTodoListToTodoListViewModel(await _todoListService.GetTodoListByIdAsync(id));
 
-        //    if (note == null)
-        //    {
-        //        return NotFound("Note does not exists.");
-        //    }
+            if (todoList == null)
+            {
+                return NotFound("Todo does not exists.");
+            }
 
-        //    return Ok(note);
-        //}
+            return Ok(todoList);
+        }
 
-        //#endregion
+        #endregion
     }
 }

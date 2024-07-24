@@ -30,27 +30,27 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region MapTodoListToTodoListViewModel
+        #region MapTodoListToTodoListViewModel
 
-        //public TodoListViewModel MapTodoListToTodoListViewModel(TodoList todoList)
-        //{
-        //    var todoListViewModel = _mapper.Map<TodoListViewModel>(todoList);
+        public TodoListViewModel MapTodoListToTodoListViewModel(TodoList todoList)
+        {
+            var todoListViewModel = _mapper.Map<TodoListViewModel>(todoList);
 
-        //    return todoListViewModel;
-        //}
+            return todoListViewModel;
+        }
 
-        //#endregion
+        #endregion
 
-        //#region MapTodoListViewModelToTodoList
+        #region MapTodoListViewModelToTodoList
 
-        //public TodoList MapTodoListViewModelToTodoList(TodoListViewModel model)
-        //{
-        //    var todoList = _mapper.Map<TodoList>(model);
+        public TodoList MapTodoListViewModelToTodoList(TodoListViewModel model)
+        {
+            var todoList = _mapper.Map<TodoList>(model);
 
-        //    return todoList;
-        //}
+            return todoList;
+        }
 
-        //#endregion
+        #endregion
 
         #region GetAllTodoListAsync
 
@@ -74,16 +74,16 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region GetTodoListByIdAsync
+        #region GetTodoListByIdAsync
 
-        //public async Task<TodoList> GetTodoListByIdAsync(int id)
-        //{
-        //    var todoList = await _todoListRepository.GetEntityByIdAsync(i => i.Id == id);
+        public async Task<TodoList> GetTodoListByIdAsync(int id)
+        {
+            var todoList = await _todoListRepository.GetEntityByIdAsync(i => i.Id == id);
 
-        //    return todoList;
-        //}
+            return todoList;
+        }
 
-        //#endregion
+        #endregion
 
         //#region RemoveTodoListAsync
 
