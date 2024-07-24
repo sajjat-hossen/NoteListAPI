@@ -66,26 +66,28 @@ namespace NoteListAPI.Controllers
 
         #region RemoveNote
 
-        [HttpDelete("{id:int}", Name = "RemoveNote")]
+        [HttpDelete("{id:int}", Name = "Delete")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<IActionResult> RemoveNote(int id)
+        public async Task<IActionResult> DeleteNote(int id)
         {
             if (id == 0)
             {
-                return BadRequest();
+                return BadRequest("Note does not exists");
             }
 
-            var note = _noteService.MapNoteToNoteViewModel(await _noteService.GetNoteByIdAsync(id));
+            var note = await _noteService.GetNoteByIdAsync(id);
 
             if (note == null)
             {
-                return NotFound();
+                return NotFound("Note does not exists");
             }
 
-            return NoContent();
+            await _noteService.RemoveNoteAsync(note);
+
+            return Ok("Note deleted successfully");
         }
 
         #endregion
@@ -118,7 +120,7 @@ namespace NoteListAPI.Controllers
 
         #region GetNoteById
 
-        [HttpGet("{id:int}", Name = "GetNoteById")]
+        [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
@@ -128,7 +130,7 @@ namespace NoteListAPI.Controllers
 
             if (note == null)
             {
-                return NotFound("Note does not exists");
+                return NotFound("Note does not exists.");
             }
 
             return Ok(note);
