@@ -50,7 +50,7 @@ namespace NoteListAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<IActionResult> CreateNote(NoteViewModel note)
+        public async Task<IActionResult> CreateNote(CreateNote note)
         {
             if (note == null)
             {
@@ -92,21 +92,26 @@ namespace NoteListAPI.Controllers
 
         #region UpdateNote
 
-        [HttpPut("{id:int}", Name = "UpdateVilla")]
+        [HttpPut("Update")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<IActionResult> UpdateNote(int id, NoteViewModel note)
+        public async Task<IActionResult> UpdateNote(UpdateNote note)
         {
             if (note == null)
             {
-                return BadRequest();
+                return BadRequest("Note does not exists");
             }
 
-            await _noteService.UpdateNoteAsync(note);
+            var isSuccessful = await _noteService.UpdateNoteAsync(note);
 
-            return NoContent();
+            if (isSuccessful == false)
+            {
+                return NotFound("Note does not exists");
+            }
 
+            return Ok("Note updated successfully");
         }
 
         #endregion

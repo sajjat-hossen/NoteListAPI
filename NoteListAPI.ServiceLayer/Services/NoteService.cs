@@ -66,9 +66,9 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #region CreateNoteAsync
 
-        public async Task CreateNoteAsync(NoteViewModel model)
+        public async Task CreateNoteAsync(CreateNote model)
         {
-            var note = MapNoteViewModelToNote(model);
+            var note = _mapper.Map<Note>(model);
             await _noteRepository.AddEntityAsync(note);
         }
 
@@ -96,10 +96,19 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #region UpdateNoteAsync
 
-        public async Task UpdateNoteAsync(NoteViewModel model)
+        public async Task<bool> UpdateNoteAsync(UpdateNote model)
         {
-            var note = MapNoteViewModelToNote(model);
-            await _noteRepository.UpdateEntityAsync(note);
+            var noteInDb = await GetNoteByIdAsync(model.Id);
+
+            if (noteInDb == null)
+            {
+                return false;
+            }
+
+            _mapper.Map(model, noteInDb);
+            await _noteRepository.UpdateEntityAsync(noteInDb);
+
+            return true;
         }
 
         #endregion

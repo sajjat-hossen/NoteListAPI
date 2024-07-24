@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NoteListAPI.ServiceLayer.Models
 {
-    public class NoteViewModel
+    public class UpdateNote
     {
         public int Id { get; set; }
         public string Title { get; set; }
