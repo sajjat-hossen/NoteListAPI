@@ -67,10 +67,18 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #region DeleteRoleAsync
 
-        public async Task DeleteRoleAsync(int id)
+        public async Task<bool> DeleteRoleAsync(int id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
+
+            if (role == null)
+            {
+                return false;
+            }
+            
             await _roleManager.DeleteAsync(role);
+
+            return true;
         }
 
         #endregion

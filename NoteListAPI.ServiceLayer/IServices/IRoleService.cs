@@ -12,6 +12,6 @@ namespace NoteListAPI.ServiceLayer.IServices
     {
         Task<IEnumerable<IdentityRole<int>>> GetAllRoles();
         Task<bool> CreateRoleAsync(CreateRole model);
-        Task DeleteRoleAsync(int id);
+        Task<bool> DeleteRoleAsync(int id);
     }
 }

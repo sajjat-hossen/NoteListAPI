@@ -71,5 +71,31 @@ namespace NoteListAPI.Controllers
         }
 
         #endregion
+
+        #region DeleteRole
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> DeleteRole(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest("Role does not exists");
+            }
+
+            var result = await _roleService.DeleteRoleAsync(id);
+
+            if (result == false)
+            {
+                return NotFound("Role does not exists");
+            }
+
+            return Ok("Role deleted successfully");
+        }
+
+        #endregion
     }
 }
