@@ -11,8 +11,8 @@ namespace NoteListAPI.ServiceLayer.IServices
     public interface IAccountService
     {
         Task<IdentityResult> CreateAccountAsync(RegisterModel model);
-        //Task SignInAccountAsync(RegisterViewModel model);
-        //Task<SignInResult> PasswordSignInAccountAsync(LoginViewModel model);
+        Task SignInAccountAsync(RegisterModel model);
+        Task<SignInResult> PasswordSignInAccountAsync(LoginModel model);
         //Task SignOutAccountAsync();
         //Task<IdentityResult> ChangePassword(ChangePasswordViewModel model);
     }

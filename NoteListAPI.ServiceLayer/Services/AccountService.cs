@@ -50,28 +50,28 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region SignInAccountAsync
+        #region SignInAccountAsync
 
-        //public async Task SignInAccountAsync(RegisterViewModel model)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(model.Email);
+        public async Task SignInAccountAsync(RegisterModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
-        //    await _signInManager.SignInAsync(user, isPersistent: false);
-        //}
+            await _signInManager.SignInAsync(user, isPersistent: false);
+        }
 
-        //#endregion
+        #endregion
 
-        //#region PasswordSignInAccountAsync
+        #region PasswordSignInAccountAsync
 
-        //public async Task<SignInResult> PasswordSignInAccountAsync(LoginViewModel model)
-        //{
-        //    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model
-        //        .RememberMe, lockoutOnFailure: false);
+        public async Task<SignInResult> PasswordSignInAccountAsync(LoginModel model)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model
+                .RememberMe, lockoutOnFailure: false);
 
-        //    return result;
-        //}
+            return result;
+        }
 
-        //#endregion
+        #endregion
 
         //#region SignOutAccountAsync
 

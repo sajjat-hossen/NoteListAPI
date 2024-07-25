@@ -7,6 +7,7 @@ namespace NoteListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NoteController : ControllerBase
     {
         #region Fields

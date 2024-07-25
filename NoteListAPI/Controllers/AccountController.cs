@@ -24,12 +24,19 @@ namespace NoteListAPI.Controllers
 
         #endregion
 
-        [HttpPost("add")]
+        #region Register
+
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
         public async Task<IActionResult> Register(RegisterModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Failed to create account");
+            }
+
             if (model == null)
             {
                 return BadRequest("Failed to create account");
@@ -42,7 +49,37 @@ namespace NoteListAPI.Controllers
                 return BadRequest("Failed to create account");
             }
 
+            await _accountService.SignInAccountAsync(model);
+
             return Ok("Account created successfully");
         }
+
+        #endregion
+
+        #region Login
+
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Failed to login");
+            }
+
+            var result = await _accountService.PasswordSignInAccountAsync(model);
+
+            if (!result.Succeeded)
+            {
+                return Unauthorized("Invalid login attempt");
+            }
+
+            return Ok("User logged in successfully");
+        }
+
+        #endregion
     }
 }
