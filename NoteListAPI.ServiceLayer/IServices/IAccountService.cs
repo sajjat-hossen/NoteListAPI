@@ -14,6 +14,6 @@ namespace NoteListAPI.ServiceLayer.IServices
         Task SignInAccountAsync(RegisterModel model);
         Task<SignInResult> PasswordSignInAccountAsync(LoginModel model);
         Task SignOutAccountAsync();
-        //Task<IdentityResult> ChangePassword(ChangePasswordViewModel model);
+        Task<IdentityResult> ChangePassword(ChangePasswordModel model);
     }
 }

@@ -95,5 +95,32 @@ namespace NoteListAPI.Controllers
         }
 
         #endregion
+
+        #region ChangePassword
+
+        [HttpPost("changePassword")]
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Failed to change password");
+            }
+
+            var result = await _accountService.ChangePassword(model);
+
+            if (!result.Succeeded)
+            {
+                return Unauthorized("Invalid change password attempt");
+            }
+
+            return Ok("Password changed successfully");
+        }
+
+        #endregion
     }
 }

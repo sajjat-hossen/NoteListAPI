@@ -82,26 +82,26 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region ChangePassword
+        #region ChangePassword
 
-        //public async Task<IdentityResult> ChangePassword(ChangePasswordViewModel model)
-        //{
-        //    var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    var logedUser = await _userManager.FindByIdAsync(logedUserId);
+        public async Task<IdentityResult> ChangePassword(ChangePasswordModel model)
+        {
+            var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var logedUser = await _userManager.FindByIdAsync(logedUserId);
 
-        //    var restul = await _userManager.ChangePasswordAsync(logedUser, model.OldPassword, model.NewPassword);
+            var restul = await _userManager.ChangePasswordAsync(logedUser, model.OldPassword, model.NewPassword);
 
-        //    if (!restul.Succeeded)
-        //    {
-        //        return restul;
-        //    }
+            if (!restul.Succeeded)
+            {
+                return restul;
+            }
 
-        //    await _signInManager.RefreshSignInAsync(logedUser);
+            await _signInManager.RefreshSignInAsync(logedUser);
 
-        //    return restul;
+            return restul;
 
-        //}
+        }
 
-        //#endregion
+        #endregion
     }
 }
