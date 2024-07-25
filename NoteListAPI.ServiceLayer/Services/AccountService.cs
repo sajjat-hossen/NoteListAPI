@@ -73,14 +73,14 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region SignOutAccountAsync
+        #region SignOutAccountAsync
 
-        //public async Task SignOutAccountAsync()
-        //{
-        //    await _signInManager.SignOutAsync();
-        //}
+        public async Task SignOutAccountAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
 
-        //#endregion
+        #endregion
 
         //#region ChangePassword
 

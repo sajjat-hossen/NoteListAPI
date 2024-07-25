@@ -81,5 +81,19 @@ namespace NoteListAPI.Controllers
         }
 
         #endregion
+
+        #region Logout
+
+        [HttpPost("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> Logout()
+        {
+            await _accountService.SignOutAccountAsync();
+
+            return Ok("User logged out successfully");
+        }
+
+        #endregion
     }
 }
