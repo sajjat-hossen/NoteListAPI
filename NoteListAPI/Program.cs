@@ -21,8 +21,7 @@ builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
     options.Password.RequiredUniqueChars = 4;
-})
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+}).AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization(options =>

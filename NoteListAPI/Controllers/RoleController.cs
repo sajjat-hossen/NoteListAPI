@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NoteListAPI.DomainLayer.Models;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
-using NoteListAPI.ServiceLayer.Services;
 
 namespace NoteListAPI.Controllers
 {

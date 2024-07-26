@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NoteListAPI.DomainLayer.Data;
 using NoteListAPI.RepositoryLayer.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoteListAPI.RepositoryLayer.Repositories
 {

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
 
@@ -91,7 +90,7 @@ namespace NoteListAPI.Controllers
         {
             await _accountService.SignOutAccountAsync();
 
-            return Ok("User logged out successfully");
+            return Ok("User logout successfully");
         }
 
         #endregion
@@ -99,7 +98,6 @@ namespace NoteListAPI.Controllers
         #region ChangePassword
 
         [HttpPost("changePassword")]
-
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

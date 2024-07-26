@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
-using NoteListAPI.ServiceLayer.Services;
 
 namespace NoteListAPI.Controllers
 {
@@ -127,7 +125,6 @@ namespace NoteListAPI.Controllers
             return Ok(models);
         }
 
-
         #endregion
 
         #region UpdateRoleClaims
@@ -148,7 +145,6 @@ namespace NoteListAPI.Controllers
 
             return Ok("Role claims updated successfully");
         }
-
 
         #endregion
     }
