@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
@@ -8,6 +9,8 @@ namespace NoteListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "SuperAdmin")]
+
     public class AdministrationController : ControllerBase
     {
         #region Fields
@@ -75,7 +78,7 @@ namespace NoteListAPI.Controllers
 
         #region UpdateUserRoles
 
-        [HttpPost("Update")]
+        [HttpPost("updateUserRole")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

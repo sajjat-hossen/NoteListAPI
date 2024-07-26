@@ -168,15 +168,15 @@ namespace NoteListAPI.DomainLayer.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ff27e062-4b5f-4fc4-b35d-b35998a8b262",
+                            ConcurrencyStamp = "e62fd31d-ae6e-4e45-8a96-7e9ac8082dab",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBgmRI0Wa4RAJ2ig9CpSe9S5wSwSUqvn87Jd6W3wmAbLVZx2nOC+IjVMu1oaE7CSYQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMkwDujJUNplbPSOvn6vmJxqDbe77tZac5wudTki8C06pzVEuB8CkXNiKxtdGB3Ftg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "542a36a2-6101-40ea-b164-6acccbc07641",
+                            SecurityStamp = "a5258c11-5d8f-4b5f-bd0c-eaeb12fbfe23",
                             TwoFactorEnabled = false,
                             UserName = "superadmin@gmail.com"
                         });

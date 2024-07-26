@@ -201,7 +201,7 @@ namespace NoteListAPI.DomainLayer.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "ff27e062-4b5f-4fc4-b35d-b35998a8b262", "superadmin@gmail.com", true, false, null, "SUPERADMIN@GMAIL.COM", "SUPERADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEBgmRI0Wa4RAJ2ig9CpSe9S5wSwSUqvn87Jd6W3wmAbLVZx2nOC+IjVMu1oaE7CSYQ==", null, false, "542a36a2-6101-40ea-b164-6acccbc07641", false, "superadmin@gmail.com" });
+                values: new object[] { 1, 0, "e62fd31d-ae6e-4e45-8a96-7e9ac8082dab", "superadmin@gmail.com", true, false, null, "SUPERADMIN@GMAIL.COM", "SUPERADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEMkwDujJUNplbPSOvn6vmJxqDbe77tZac5wudTki8C06pzVEuB8CkXNiKxtdGB3Ftg==", null, false, "a5258c11-5d8f-4b5f-bd0c-eaeb12fbfe23", false, "superadmin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

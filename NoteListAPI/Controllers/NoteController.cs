@@ -30,6 +30,7 @@ namespace NoteListAPI.Controllers
         [HttpGet("all")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ViewNotePolicy")]
 
         public async Task<IActionResult> GetAllNote()
         {
@@ -50,6 +51,7 @@ namespace NoteListAPI.Controllers
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "CreateNotePolicy")]
 
         public async Task<IActionResult> CreateNote(CreateNote note)
         {
@@ -71,6 +73,7 @@ namespace NoteListAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = "DeleteNotePolicy")]
 
         public async Task<IActionResult> DeleteNote(int id)
         {
@@ -99,6 +102,7 @@ namespace NoteListAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "EditNotePolicy")]
 
         public async Task<IActionResult> UpdateNote(UpdateNote note)
         {
@@ -124,6 +128,7 @@ namespace NoteListAPI.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ViewNotePolicy")]
 
         public async Task<IActionResult> GetNoteById(int id)
         {

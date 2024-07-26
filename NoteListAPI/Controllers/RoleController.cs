@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NoteListAPI.DomainLayer.Models;
 using NoteListAPI.ServiceLayer.IServices;
@@ -9,6 +10,8 @@ namespace NoteListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "SuperAdmin")]
+
     public class RoleController : ControllerBase
     {
         #region Fields
@@ -74,7 +77,7 @@ namespace NoteListAPI.Controllers
 
         #region DeleteRole
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("delete/{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

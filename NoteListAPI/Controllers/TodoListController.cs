@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
 
@@ -6,6 +7,8 @@ namespace NoteListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class TodoListController : ControllerBase
     {
         #region Fields
@@ -28,6 +31,7 @@ namespace NoteListAPI.Controllers
         [HttpGet("all")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ViewTodoListPolicy")]
 
         public async Task<IActionResult> GetAllTodoList()
         {
@@ -48,6 +52,7 @@ namespace NoteListAPI.Controllers
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "CreateTodoListPolicy")]
 
         public async Task<IActionResult> CreateTodoList(CreateTodoList todoList)
         {
@@ -69,6 +74,7 @@ namespace NoteListAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = "DeleteTodoListPolicy")]
 
         public async Task<IActionResult> DeleteTodoList(int id)
         {
@@ -97,6 +103,7 @@ namespace NoteListAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "EditTodoListPolicy")]
 
         public async Task<IActionResult> UpdateTodoList(UpdateTodoList todoList)
         {
@@ -122,6 +129,7 @@ namespace NoteListAPI.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "ViewTodoListPolicy")]
 
         public async Task<IActionResult> GetTodoListById(int id)
         {
