@@ -143,71 +143,69 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region GetRoleClaimsAsync
+        #region GetRoleClaimsAsync
 
-        //public async Task<List<RoleClaimViewModel>> GetRoleClaimsAsync()
-        //{
-        //    var models = new List<RoleClaimViewModel>();
-        //    var roles = await _roleManager.Roles.ToListAsync();
+        public async Task<List<RoleClaimViewModel>> GetRoleClaimsAsync()
+        {
+            var models = new List<RoleClaimViewModel>();
+            var roles = await _roleManager.Roles.ToListAsync();
 
-        //    foreach (var identityRole in roles)
-        //    {
-        //        var existingRoleClaims = await _roleManager.GetClaimsAsync(identityRole);
+            foreach (var identityRole in roles)
+            {
+                var existingRoleClaims = await _roleManager.GetClaimsAsync(identityRole);
 
-        //        var roleClaims = ClaimsStore.GetAllClaims().Select(claim => new RoleClaim
-        //        {
-        //            ClaimType = claim.Type,
-        //            IsSelected = existingRoleClaims.Any(c => c.Type == claim.Type)
-        //        }).ToList();
+                var roleClaims = ClaimsStore.GetAllClaims().Select(claim => new RoleClaim
+                {
+                    ClaimType = claim.Type,
+                    IsSelected = existingRoleClaims.Any(c => c.Type == claim.Type)
+                }).ToList();
 
-        //        var roleClaimModel = new RoleClaimViewModel
-        //        {
-        //            RoleName = identityRole.Name,
-        //            RoleClaims = roleClaims
-        //        };
+                var roleClaimModel = new RoleClaimViewModel
+                {
+                    RoleName = identityRole.Name,
+                    RoleClaims = roleClaims
+                };
 
-        //        models.Add(roleClaimModel);
-        //    }
+                models.Add(roleClaimModel);
+            }
 
-        //    return models;
-        //}
+            return models;
+        }
 
+        #endregion
 
+        #region UpdateRoleClaimsAsync
 
-        //#endregion
+        public async Task<bool> UpdateRoleClaimsAsync(List<RoleClaimViewModel> models)
+        {
+            var roles = await _roleManager.Roles.ToListAsync();
+            foreach (IdentityRole<int> identityRole in roles)
+            {
+                var existingRoleClaims = await _roleManager.GetClaimsAsync(identityRole);
 
-        //#region UpdateRoleClaimsAsync
+                foreach (Claim claim in existingRoleClaims)
+                {
+                    await _roleManager.RemoveClaimAsync(identityRole, claim);
+                }
+            }
 
-        //public async Task<bool> UpdateRoleClaimsAsync(List<RoleClaimViewModel> models)
-        //{
-        //    var roles = await _roleManager.Roles.ToListAsync();
-        //    foreach (IdentityRole<int> identityRole in roles)
-        //    {
-        //        var existingRoleClaims = await _roleManager.GetClaimsAsync(identityRole);
+            foreach (var model in models)
+            {
+                var identityRole = await _roleManager.FindByNameAsync(model.RoleName);
 
-        //        foreach (Claim claim in existingRoleClaims)
-        //        {
-        //            await _roleManager.RemoveClaimAsync(identityRole, claim);
-        //        }
-        //    }
+                var allSelectedClaims = model.RoleClaims.Where(c => c.IsSelected)
+                .Select(c => new Claim(c.ClaimType, c.ClaimType))
+                .ToList();
 
-        //    foreach (var model in models)
-        //    {
-        //        var identityRole = await _roleManager.FindByNameAsync(model.RoleName);
+                foreach (var claim in allSelectedClaims)
+                {
+                    await _roleManager.AddClaimAsync(identityRole, claim);
+                }
+            }
 
-        //        var allSelectedClaims = model.RoleClaims.Where(c => c.IsSelected)
-        //        .Select(c => new Claim(c.ClaimType, c.ClaimType))
-        //        .ToList();
+            return true;
+        }
 
-        //        foreach (var claim in allSelectedClaims)
-        //        {
-        //            await _roleManager.AddClaimAsync(identityRole, claim);
-        //        }
-        //    }
-
-        //    return true;
-        //}
-
-        //#endregion
+        #endregion
     }
 }

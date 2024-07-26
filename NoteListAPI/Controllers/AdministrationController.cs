@@ -105,5 +105,48 @@ namespace NoteListAPI.Controllers
         }
 
         #endregion
+
+        #region GetRoleClaims
+
+        [HttpGet("roleClaims")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> GetRoleClaims()
+        {
+            var models = await _administrationService.GetRoleClaimsAsync();
+
+            if (models == null)
+            {
+                return NotFound("Role Claims does not exist");
+            }
+
+            return Ok(models);
+        }
+
+
+        #endregion
+
+        #region UpdateRoleClaims
+
+        [HttpPost("updateRoleClaims")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> UpdateRoleClaims(List<RoleClaimViewModel> models)
+        {
+            var result = await _administrationService.UpdateRoleClaimsAsync(models);
+
+            if (result == false)
+            {
+                return BadRequest("Failed to update role claims");
+            }
+
+            return Ok("Role claims updated successfully");
+        }
+
+
+        #endregion
     }
 }
