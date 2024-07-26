@@ -46,7 +46,7 @@ namespace NoteListAPI.Controllers
 
         #region UserClaims
 
-        [HttpGet("{id:int}")]
+        [HttpGet("userClaims/{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
