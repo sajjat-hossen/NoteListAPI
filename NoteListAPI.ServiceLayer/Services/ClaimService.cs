@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using NoteListAPI.DomainLayer.Models;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
 using System;
@@ -53,113 +54,113 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region FindUserByIdAsync
+        #region FindUserByIdAsync
 
-        //public async Task<IdentityUser<int>> FindUserByIdAsync(int id)
-        //{
-        //    var user = await _userManager.FindByIdAsync(id.ToString());
+        public async Task<IdentityUser<int>> FindUserByIdAsync(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
-        //    return user;
-        //}
+            return user;
+        }
 
-        //#endregion
+        #endregion
 
-        //#region GetUserClaimsAsync
+        #region GetUserClaimsAsync
 
-        //public async Task<IEnumerable<Claim>> GetUserClaimsAsync(IdentityUser<int> user)
-        //{
-        //    var claims = await _userManager.GetClaimsAsync(user);
+        public async Task<IEnumerable<Claim>> GetUserClaimsAsync(IdentityUser<int> user)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
 
-        //    return claims;
-        //}
+            return claims;
+        }
 
-        //#endregion
+        #endregion
 
-        //#region GetUserClaimsModel
+        #region GetUserClaimsModel
 
-        //public async Task<UserClaimViewModel> GetUserClaimsModel(IdentityUser<int> user)
-        //{
-        //    var model = new UserClaimViewModel
-        //    {
-        //        Id = user.Id,
-        //        UserName = user.UserName,
-        //        Email = user.Email,
-        //        Cliams = new List<UserClaim>()
-        //    };
+        public async Task<UserClaimViewModel> GetUserClaimsModel(IdentityUser<int> user)
+        {
+            var model = new UserClaimViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Cliams = new List<UserClaim>()
+            };
 
-        //    var userRoles = await _userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
 
-        //    var existingUserRolesClaims = (await Task.WhenAll(userRoles.Select(async role =>
-        //    {
-        //        var identityRole = await _roleManager.FindByNameAsync(role);
-        //        return await _roleManager.GetClaimsAsync(identityRole);
-        //    }))).SelectMany(claims => claims).ToList();
+            var existingUserRolesClaims = (await Task.WhenAll(userRoles.Select(async role =>
+            {
+                var identityRole = await _roleManager.FindByNameAsync(role);
+                return await _roleManager.GetClaimsAsync(identityRole);
+            }))).SelectMany(claims => claims).ToList();
 
 
-        //    var existingUserClaims = await GetUserClaimsAsync(user);
+            var existingUserClaims = await GetUserClaimsAsync(user);
 
-        //    var userClaims = ClaimsStore.GetAllClaims().Select(claim =>
-        //    {
-        //        UserClaim userClaim = new UserClaim
-        //        {
-        //            ClaimType = claim.Type
-        //        };
+            var userClaims = ClaimsStore.GetAllClaims().Select(claim =>
+            {
+                UserClaim userClaim = new UserClaim
+                {
+                    ClaimType = claim.Type
+                };
 
-        //        if (existingUserClaims.Any(c => c.Type == claim.Type))
-        //        {
-        //            userClaim.IsSelected = true;
-        //        }
+                if (existingUserClaims.Any(c => c.Type == claim.Type))
+                {
+                    userClaim.IsSelected = true;
+                }
 
-        //        if (existingUserRolesClaims.Any(c => c.Type == claim.Type))
-        //        {
-        //            userClaim.isRoleClaimed = true;
-        //            userClaim.IsSelected = true;
-        //        }
+                if (existingUserRolesClaims.Any(c => c.Type == claim.Type))
+                {
+                    userClaim.isRoleClaimed = true;
+                    userClaim.IsSelected = true;
+                }
 
-        //        return userClaim;
-        //    });
+                return userClaim;
+            });
 
-        //    model.Cliams.AddRange(userClaims);
+            model.Cliams.AddRange(userClaims);
 
-        //    return model;
-        //}
+            return model;
+        }
 
-        //#endregion
+        #endregion
 
-        //#region UpdateUserClaimsAsync
+        #region UpdateUserClaimsAsync
 
-        //public async Task<bool> UpdateUserClaimsAsync(UserClaimViewModel model)
-        //{
-        //    var user = await FindUserByIdAsync(model.Id);
-        //    var claims = await _userManager.GetClaimsAsync(user);
-        //    var result = await _userManager.RemoveClaimsAsync(user, claims);
+        public async Task<bool> UpdateUserClaimsAsync(UserClaimViewModel model)
+        {
+            var user = await FindUserByIdAsync(model.Id);
+            var claims = await _userManager.GetClaimsAsync(user);
+            var result = await _userManager.RemoveClaimsAsync(user, claims);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        return false;
-        //    }
+            if (!result.Succeeded)
+            {
+                return false;
+            }
 
-        //    var allSelectedClaims = model.Cliams.Where(c => c.IsSelected)
-        //        .Select(c => new Claim(c.ClaimType, c.ClaimType))
-        //        .ToList();
+            var allSelectedClaims = model.Cliams.Where(c => c.IsSelected)
+                .Select(c => new Claim(c.ClaimType, c.ClaimType))
+                .ToList();
 
-        //    if (allSelectedClaims.Any())
-        //    {
-        //        result = await _userManager.AddClaimsAsync(user, allSelectedClaims);
+            if (allSelectedClaims.Any())
+            {
+                result = await _userManager.AddClaimsAsync(user, allSelectedClaims);
 
-        //        if (!result.Succeeded)
-        //        {
-        //            return false;
-        //        }
+                if (!result.Succeeded)
+                {
+                    return false;
+                }
 
-        //        var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        //        var logedUser = await FindUserByIdAsync(Convert.ToInt32(logedUserId));
-        //        await _signInManager.RefreshSignInAsync(logedUser);
-        //    }
+                var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var logedUser = await FindUserByIdAsync(Convert.ToInt32(logedUserId));
+                await _signInManager.RefreshSignInAsync(logedUser);
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
 
-        //#endregion
+        #endregion
     }
 }
