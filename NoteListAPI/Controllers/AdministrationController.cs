@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NoteListAPI.ServiceLayer.IServices;
+using NoteListAPI.ServiceLayer.Models;
 using NoteListAPI.ServiceLayer.Services;
 
 namespace NoteListAPI.Controllers
@@ -68,6 +69,39 @@ namespace NoteListAPI.Controllers
             var model = await _administrationService.GetUserRolesModel(user);
 
             return Ok(model);
+        }
+
+        #endregion
+
+        #region UpdateUserRoles
+
+        [HttpPost("Update")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> UpdateUserRoles(UserRoleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Failed to update user roles");
+            }
+
+            var user = await _administrationService.FindUserByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                return NotFound("User does not exist");
+            }
+
+            var result = await _administrationService.UpdateUserRolesAsync(model);
+
+            if (result == false)
+            {
+                return BadRequest("Failed to update user roles");
+            }
+
+            return Ok("User roles updated successfully");
         }
 
         #endregion

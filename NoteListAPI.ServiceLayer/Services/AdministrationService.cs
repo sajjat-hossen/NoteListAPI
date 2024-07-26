@@ -106,42 +106,42 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        //#region UpdateUserRolesAsync
+        #region UpdateUserRolesAsync
 
-        //public async Task<bool> UpdateUserRolesAsync(UserRoleViewModel model)
-        //{
-        //    var user = await FindUserByIdAsync(model.Id);
-        //    var roles = await _userManager.GetRolesAsync(user);
-        //    var result = await _userManager.RemoveFromRolesAsync(user, roles);
+        public async Task<bool> UpdateUserRolesAsync(UserRoleViewModel model)
+        {
+            var user = await FindUserByIdAsync(model.Id);
+            var roles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        return false;
-        //    }
+            if (!result.Succeeded)
+            {
+                return false;
+            }
 
-        //    var allSelectedRoles = model.Roles.Where(c => c.IsSelected)
-        //        .Select(c => c.RoleName)
-        //        .ToList();
+            var allSelectedRoles = model.Roles.Where(c => c.IsSelected)
+                .Select(c => c.RoleName)
+                .ToList();
 
-        //    if (allSelectedRoles.Any())
-        //    {
-        //        result = await _userManager.AddToRolesAsync(user, allSelectedRoles);
+            if (allSelectedRoles.Any())
+            {
+                result = await _userManager.AddToRolesAsync(user, allSelectedRoles);
 
-        //        if (!result.Succeeded)
-        //        {
-        //            return false;
-        //        }
+                if (!result.Succeeded)
+                {
+                    return false;
+                }
 
-        //        var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        //        var logedUser = await FindUserByIdAsync(Convert.ToInt32(logedUserId));
-        //        await _signInManager.RefreshSignInAsync(logedUser);
-        //    }
+                var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var logedUser = await FindUserByIdAsync(Convert.ToInt32(logedUserId));
+                await _signInManager.RefreshSignInAsync(logedUser);
+            }
 
-        //    return true;
+            return true;
 
-        //}
+        }
 
-        //#endregion
+        #endregion
 
         //#region GetRoleClaimsAsync
 
