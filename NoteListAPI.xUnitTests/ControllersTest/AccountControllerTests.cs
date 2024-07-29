@@ -5,12 +5,6 @@ using Moq;
 using NoteListAPI.Controllers;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NoteListAPI.xUnitTests.ControllersTest
 {
