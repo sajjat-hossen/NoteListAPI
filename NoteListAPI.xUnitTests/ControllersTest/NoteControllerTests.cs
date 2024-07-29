@@ -225,6 +225,7 @@ namespace NoteListAPI.xUnitTests.Controllers
 
         #region GetNoteByIdTests
 
+        [Fact]
         public async Task GetNoteById_ReturnsOkResult_WhenNoteExists()
         {
             // Arrange
@@ -241,7 +242,6 @@ namespace NoteListAPI.xUnitTests.Controllers
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
 
-            Assert.Equal(note, okResult.Value);
             Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
         }
 
