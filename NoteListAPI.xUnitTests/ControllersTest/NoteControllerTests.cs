@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NoteListAPI.Controllers;
+using NoteListAPI.DomainLayer.Models;
 using NoteListAPI.ServiceLayer.IServices;
 using NoteListAPI.ServiceLayer.Models;
 using NoteListAPI.xUnitTests.ControllersTest;
@@ -117,6 +118,73 @@ namespace NoteListAPI.xUnitTests.Controllers
                 Assert.Equal("Failed to create note", badRequestResult.Value);
             }
 
+        }
+
+        #endregion
+
+        #region DeleteNoteTests
+        public static IEnumerable<object[]> DeleteNoteData()
+        {
+            return new List<object[]>
+            {
+                new object[] { 1, true },
+                new object[] { 0, false },
+                //new object[] { 2, false }
+            };
+
+        }
+
+        [Theory]
+        [MemberData(nameof(DeleteNoteData))]
+        public async Task DeleteNote_ReturnsExpectedResult(int id, bool noteExists)
+        {
+            // Arrange
+            if (id == 0)
+            {
+
+            }
+            else if (noteExists)
+            {
+                var note = new Note
+                {
+                    Id = id,
+                    Title = "Existing Note",
+                    Description = "Existing Description"
+                };
+
+                _mockNoteService.Setup(service => service.GetNoteByIdAsync(id)).ReturnsAsync(note);
+                _mockNoteService.Setup(service => service.RemoveNoteAsync(note)).Returns(Task.CompletedTask);
+            }
+            else
+            {
+                _mockNoteService.Setup(service => service.GetNoteByIdAsync(id)).ReturnsAsync((Note)null);
+            }
+
+            // Act
+            var result =  await _noteController.DeleteNote(id);
+
+            // Assert
+            if (id == 0)
+            {
+                var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+                Assert.Equal(400, badRequestResult.StatusCode);
+                Assert.Equal("Note does not exists", badRequestResult.Value);
+                _mockNoteService.Verify(service => service.RemoveNoteAsync(It.IsAny<Note>()), Times.Never);
+            }
+            else if (noteExists)
+            {
+                var okResult = Assert.IsType<OkObjectResult>(result);
+                Assert.Equal(200, okResult.StatusCode);
+                Assert.Equal("Note deleted successfully", okResult.Value);
+                _mockNoteService.Verify(service => service.RemoveNoteAsync(It.IsAny<Note>()), Times.Once);
+            }
+            else
+            {
+                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
+                Assert.Equal(404, notFoundResult.StatusCode);
+                Assert.Equal("Note does not exists", notFoundResult.Value);
+                _mockNoteService.Verify(service => service.RemoveNoteAsync(It.IsAny<Note>()), Times.Never);
+            }
         }
 
         #endregion
