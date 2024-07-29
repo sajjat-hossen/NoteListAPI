@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NoteListAPI.Controllers;
 using NoteListAPI.DomainLayer.Models;
@@ -54,7 +55,7 @@ namespace NoteListAPI.xUnitTests.Controllers
             var returnNotes = Assert.IsType<List<NoteViewModel>>(okResult.Value);
 
             Assert.NotNull(result);
-            Assert.Equal(200, result.StatusCode);
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
             Assert.Equal(2, returnNotes.Count);
             Assert.Equal(notes, result.Value);
         }
@@ -71,7 +72,7 @@ namespace NoteListAPI.xUnitTests.Controllers
 
             // Assert
             var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Equal(404, notFoundResult.StatusCode);
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
             Assert.Equal("No note found", notFoundResult.Value);
         }
 
@@ -95,7 +96,6 @@ namespace NoteListAPI.xUnitTests.Controllers
         public async Task CreateNote_ReturnsExpectedResult(CreateNote note)
         {
             // Arrange
-
             _mockNoteService.Setup(service => service.CreateNoteAsync(note))
                 .Returns(Task.CompletedTask);
 
@@ -107,14 +107,14 @@ namespace NoteListAPI.xUnitTests.Controllers
             {
                 var okResult = Assert.IsType<OkObjectResult>(result);
 
-                Assert.Equal(200, okResult.StatusCode);
+                Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
                 Assert.Equal("Note created successfully", okResult.Value);
             }
             else
             {
                 var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
 
-                Assert.Equal(400, badRequestResult.StatusCode);
+                Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
                 Assert.Equal("Failed to create note", badRequestResult.Value);
             }
 
@@ -167,24 +167,62 @@ namespace NoteListAPI.xUnitTests.Controllers
             if (id == 0)
             {
                 var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-                Assert.Equal(400, badRequestResult.StatusCode);
+                Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
                 Assert.Equal("Note does not exists", badRequestResult.Value);
                 _mockNoteService.Verify(service => service.RemoveNoteAsync(It.IsAny<Note>()), Times.Never);
             }
             else if (noteExists)
             {
                 var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Equal(200, okResult.StatusCode);
+                Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
                 Assert.Equal("Note deleted successfully", okResult.Value);
                 _mockNoteService.Verify(service => service.RemoveNoteAsync(It.IsAny<Note>()), Times.Once);
             }
             else
             {
                 var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal(404, notFoundResult.StatusCode);
+                Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
                 Assert.Equal("Note does not exists", notFoundResult.Value);
                 _mockNoteService.Verify(service => service.RemoveNoteAsync(It.IsAny<Note>()), Times.Never);
             }
+        }
+
+        #endregion
+
+        #region UpdateNoteTests
+
+        [Fact]
+        public async Task UpdateNote_ReturnsOkResult_WhenNoteIsUpdated()
+        {
+            // Arrange
+            var updateNote = new UpdateNote { Id = 1, Title = "Updated Note", Description = "Updated Description" };
+            _mockNoteService.Setup(service => service.UpdateNoteAsync(updateNote))
+                .ReturnsAsync(true);
+
+            // Act
+            var result = await _noteController.UpdateNote(updateNote);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+            Assert.Equal("Note updated successfully", okResult.Value);
+        }
+
+        [Fact]
+        public async Task UpdateNote_ReturnsNotFound_WhenNoteDoesNotExist()
+        {
+            // Arrange
+            var updateNote = new UpdateNote { Id = 1, Title = "Updated Note", Description = "Updated Description" };
+            _mockNoteService.Setup(service => service.UpdateNoteAsync(updateNote))
+                .ReturnsAsync(false);
+
+            // Act
+            var result = await _noteController.UpdateNote(updateNote);
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+            Assert.Equal("Note does not exists", notFoundResult.Value);
         }
 
         #endregion
