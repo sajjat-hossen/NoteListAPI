@@ -77,9 +77,9 @@ namespace NoteListAPI.ServiceLayer.Services
 
         #endregion
 
-        #region ChangePassword
+        #region ChangePasswordAsync
 
-        public async Task<IdentityResult> ChangePassword(ChangePasswordModel model)
+        public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
         {
             var logedUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var logedUser = await _userManager.FindByIdAsync(logedUserId);

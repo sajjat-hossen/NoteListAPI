@@ -109,7 +109,7 @@ namespace NoteListAPI.Controllers
                 return BadRequest("Failed to change password");
             }
 
-            var result = await _accountService.ChangePassword(model);
+            var result = await _accountService.ChangePasswordAsync(model);
 
             if (!result.Succeeded)
             {
